@@ -1,12 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="./index.JS"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Console RockPaperScissiors Game</title>
+    <title>Rock Paper Scissors - Retro Edition</title>
+    <style>
+        body {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            margin-top: 50px;
+        }
+        h1 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            border-bottom: 2px solid #0f0;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        .buttons {
+            margin: 30px 0;
+        }
+        button {
+            background: #000;
+            color: #0f0;
+            border: 2px solid #0f0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.2rem;
+            padding: 8px 16px;
+            margin: 0 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+        button:hover:not(:disabled) {
+            background: #0f0;
+            color: #000;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .scoreboard {
+            font-size: 1.4rem;
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #0f0;
+            display: inline-block;
+            min-width: 300px;
+        }
+        .scoreboard span {
+            font-weight: bold;
+        }
+        .result-area {
+            font-size: 1.2rem;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px dashed #0f0;
+            width: 80%;
+            max-width: 500px;
+            min-height: 70px;
+            background: #001000;
+        }
+        .winner-area {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px;
+            padding: 10px;
+            background: #0f0;
+            color: #000;
+            display: inline-block;
+        }
+        .reset-btn {
+            margin-top: 20px;
+            background: #330000;
+            border-color: #f00;
+            color: #f77;
+        }
+        .reset-btn:hover {
+            background: #f00;
+            color: #000;
+        }
+        footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #0a0;
+        }
+    </style>
 </head>
 <body>
+    <h1>ROCK PAPER SCISSORS</h1>
     
+    <div class="buttons">
+        <button id="rock" data-testid="rock-btn">ROCK</button>
+        <button id="paper" data-testid="paper-btn">PAPER</button>
+        <button id="scissors" data-testid="scissors-btn">SCISSORS</button>
+    </div>
+    
+    <div class="scoreboard" data-testid="scoreboard">
+        YOU: <span id="human-score" data-testid="human-score">0</span> &nbsp;|&nbsp;
+        CPU: <span id="computer-score" data-testid="computer-score">0</span>
+    </div>
+    
+    <div class="result-area" data-testid="round-result">
+        <!-- round result will appear here -->
+    </div>
+    
+    <div class="winner-area" data-testid="winner-message">
+        <!-- winner message appears here -->
+    </div>
+    
+    <div>
+        <button id="reset" class="reset-btn" data-testid="reset-btn">NEW GAME</button>
+    </div>
+    
+    <footer>FIRST TO 5 WINS</footer>
+
+    <script src="index.JS"></script>
 </body>
 </html>
