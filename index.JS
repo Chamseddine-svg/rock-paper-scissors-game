@@ -1,23 +1,38 @@
+// ------------------------------
+// Rock Paper Scissors Game Logic
+// Player selects via buttons vs computer
+// User defines number of rounds, final winner based on total score
+// ------------------------------
+
+// Game state variables
 let humanScore = 0;
 let computerScore = 0;
 let currentRound = 0;
 let totalRounds = 0;
-let gameActive = false;     // only true after setting totalRounds
+let gameActive = false;          // Only true after user sets number of games
 
-// DOM elements with test ids
+// ------------------------------
+// DOM Element References (with data-testid attributes for testing)
+// ------------------------------
 const humanScoreSpan = document.getElementById('human-score');
 const computerScoreSpan = document.getElementById('computer-score');
 const roundResultDiv = document.querySelector('[data-testid="round-result"]');
 const winnerMessageDiv = document.querySelector('[data-testid="winner-message"]');
 const totalRoundsSpan = document.getElementById('total-rounds-display');
 const currentRoundSpan = document.getElementById('current-round');
+const computerChoiceSpan = document.getElementById('computer-choice-display');
 
+// Buttons
 const rockBtn = document.getElementById('rock');
 const paperBtn = document.getElementById('paper');
 const scissorsBtn = document.getElementById('scissors');
 const resetBtn = document.getElementById('reset');
 
-// Helper: computer choice
+// ------------------------------
+// Helper Functions
+// ------------------------------
+
+// Random computer selection: returns 'rock', 'paper', or 'scissors'
 function getComputerChoice() {
     const random = Math.floor(Math.random() * 3);
     switch (random) {
@@ -27,7 +42,7 @@ function getComputerChoice() {
     }
 }
 
-// Update displayed scores and round info
+// Update scoreboard and round counters on the page
 function updateUI() {
     humanScoreSpan.textContent = humanScore;
     computerScoreSpan.textContent = computerScore;
@@ -35,24 +50,33 @@ function updateUI() {
     currentRoundSpan.textContent = currentRound;
 }
 
+// Display round result text
 function setRoundResult(message) {
     roundResultDiv.textContent = message;
 }
 
+// Display overall winner message
 function setWinnerMessage(message) {
     winnerMessageDiv.textContent = message;
 }
 
+// Update the visual computer choice indicator
+function setComputerChoiceDisplay(choice) {
+    computerChoiceSpan.textContent = choice.toUpperCase();
+}
+
+// Enable or disable game buttons (used when game ends or resets)
 function disableButtons(disabled) {
     rockBtn.disabled = disabled;
     paperBtn.disabled = disabled;
     scissorsBtn.disabled = disabled;
 }
 
-// End of game: show overall winner based on scores
+// Called when totalRounds reached: declare final winner and freeze game
 function endGame() {
     gameActive = false;
     disableButtons(true);
+
     let finalMessage = '';
     if (humanScore > computerScore) {
         finalMessage = `GAME OVER - YOU WIN (${humanScore} to ${computerScore})`;
@@ -62,25 +86,28 @@ function endGame() {
         finalMessage = `GAME OVER - TIE! (${humanScore} each)`;
     }
     setWinnerMessage(finalMessage);
-    setRoundResult('Game finished. Press NEW GAME to play again.');
+    // Round result is NOT cleared – the last round's outcome stays visible
 }
 
-// Play one round
+// Core game logic for one round
 function playRound(playerChoice) {
+    // Guard: game must be active and rounds remaining
     if (!gameActive) {
         setRoundResult('No active game. Press NEW GAME and enter number of rounds.');
         return;
     }
-
-    // if all rounds already played, ignore
     if (currentRound >= totalRounds) {
         setRoundResult('Game already finished. Press NEW GAME.');
         return;
     }
 
+    // Get computer's move and update visual display
     const computerChoice = getComputerChoice();
+    setComputerChoiceDisplay(computerChoice);
+
     let resultMessage = '';
 
+    // Determine winner
     if (playerChoice === computerChoice) {
         resultMessage = `ROUND ${currentRound+1}: TIE - both ${playerChoice.toUpperCase()}.`;
     } else if (
@@ -95,21 +122,21 @@ function playRound(playerChoice) {
         computerScore++;
     }
 
+    // Advance round and update UI
     currentRound++;
     updateUI();
     setRoundResult(resultMessage);
 
-    // check if game finished
+    // If all rounds played, finish the game
     if (currentRound >= totalRounds) {
         endGame();
     }
 }
 
-// Start a new game with user‑specified number of rounds
+// Initialize or reset game: ask user for number of games
 function startNewGame() {
     let input = prompt('How many games (rounds) do you want to play?', '3');
     if (input === null) {
-        // user cancelled: keep previous state but optionally disable buttons
         setRoundResult('Game cancelled. Press NEW GAME to try again.');
         return;
     }
@@ -119,37 +146,39 @@ function startNewGame() {
         return;
     }
 
-    // reset game state
+    // Reset all state variables
     humanScore = 0;
     computerScore = 0;
     currentRound = 0;
     totalRounds = rounds;
     gameActive = true;
 
-    // clear messages
+    // Clear messages and computer choice placeholder
     setRoundResult('');
     setWinnerMessage('');
+    setComputerChoiceDisplay('---');
 
-    // enable buttons
+    // Enable buttons and update score displays
     disableButtons(false);
     updateUI();
 
     setRoundResult(`Game started! Best of ${totalRounds} rounds. Make your move.`);
 }
 
-// Reset / New Game button behaviour
+// Reset button handler: just call startNewGame
 function resetGame() {
     startNewGame();
 }
 
-// Attach event listeners
+// ------------------------------
+// Event Listeners
+// ------------------------------
 rockBtn.addEventListener('click', () => playRound('rock'));
 paperBtn.addEventListener('click', () => playRound('paper'));
 scissorsBtn.addEventListener('click', () => playRound('scissors'));
 resetBtn.addEventListener('click', resetGame);
 
-// Initialise: wait for user to click NEW GAME or auto‑prompt on page load
-// Optionally prompt immediately:
+// On page load, automatically start a new game
 window.addEventListener('load', () => {
     startNewGame();
 });

@@ -1,0 +1,129 @@
+/* ------------------------------
+   Retro Rock Paper Scissors Game
+   Terminal-inspired monospace theme
+   ------------------------------ */
+
+/* Black background, green monospace font = classic terminal look */
+body {
+    background: #000;
+    color: #0f0;
+    font-family: 'Courier New', monospace;
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Game title with retro underline */
+h1 {
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border-bottom: 2px solid #0f0;
+    display: inline-block;
+    padding-bottom: 8px;
+}
+
+/* Info panel: rounds and game state */
+.info-panel {
+    margin: 20px auto;
+    padding: 8px;
+    border: 1px solid #0f0;
+    width: 300px;
+    background: #001000;
+}
+
+/* Container for action buttons */
+.buttons {
+    margin: 20px 0;
+}
+
+/* Base button style */
+button {
+    background: #000;
+    color: #0f0;
+    border: 2px solid #0f0;
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    padding: 6px 14px;
+    margin: 0 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+/* Hover effect for enabled buttons */
+button:hover:not(:disabled) {
+    background: #0f0;
+    color: #000;
+}
+
+/* Disabled state (game ended) */
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Computer choice indicator area */
+.choice-area {
+    margin: 15px auto;
+    padding: 5px;
+    border: 1px solid #0f0;
+    width: 250px;
+    background: #001000;
+    font-size: 1.1rem;
+}
+/* Highlight computer's actual choice */
+.choice-area span {
+    font-weight: bold;
+    color: #ff0;
+}
+
+/* Scoreboard box */
+.scoreboard {
+    font-size: 1.3rem;
+    margin: 15px;
+    padding: 8px;
+    border: 1px dashed #0f0;
+    display: inline-block;
+    min-width: 260px;
+}
+
+/* Round result area (dynamic text) */
+.result-area {
+    font-size: 1.1rem;
+    margin: 15px auto;
+    padding: 8px;
+    border: 1px dotted #0f0;
+    width: 80%;
+    max-width: 500px;
+    min-height: 60px;
+    background: #001000;
+}
+
+/* Winner announcement area - high contrast */
+.winner-area {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 15px;
+    padding: 8px;
+    background: #0f0;
+    color: #000;
+    display: inline-block;
+}
+
+/* Special styling for reset button (red border) */
+.reset-btn {
+    margin-top: 15px;
+    background: #330000;
+    border-color: #f00;
+    color: #f77;
+}
+.reset-btn:hover {
+    background: #f00;
+    color: #000;
+}
+
+/* Footer text - smaller, subtle */
+footer {
+    margin-top: 30px;
+    font-size: 0.75rem;
+    color: #0a0;
+}
